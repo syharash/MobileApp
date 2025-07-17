@@ -60,6 +60,42 @@ function safeUpdate(id, value) {
   }
 }
 
+function handleCredentialResponse(response) {
+  const token = response.credential;
+  const user = parseJwt(token);
+
+  if (!user || !user.name || !user.picture) {
+    console.warn("Invalid user object from token:", user);
+    return;
+  }
+
+  localStorage.setItem("userEmail", user.email);
+  localStorage.setItem("userName", user.name);
+  showToast(`👋 Welcome, ${user.name}`);
+
+  document.getElementById("userBadge").textContent = `Logged in as: ${user.name} (${user.email})`;
+  document.getElementById("userPic").src = user.picture;
+  document.getElementById("login-screen").style.display = "none";
+  document.querySelector(".container").style.display = "block";
+
+  initializeApp();
+}
+
+function parseJwt(token) {
+  try {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(atob(base64).split('').map(c =>
+      '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+    ).join(''));
+    return JSON.parse(jsonPayload);
+  } catch (e) {
+    console.error("Failed to parse JWT:", e);
+    return null;
+  }
+}
+
+
 // --- INIT ---
 function initMapServices() {
   if (map) return;
