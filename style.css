@@ -85,6 +85,33 @@ button:disabled {
   opacity: 0.6;
 }
 
+#floating-end-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #dc3545;
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  padding: 14px 20px;
+  font-size: 1em;
+  font-weight: bold;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  z-index: 1000;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#floating-end-btn:hover {
+  background-color: #b02a37;
+}
+
+#floating-end-btn:disabled {
+  background-color: #aaa;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
 /* Trip Summary */
 #trip-summary {
   margin-top: 20px;
