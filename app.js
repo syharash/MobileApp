@@ -53,6 +53,53 @@ function handleCredentialResponse(response) {
   initializeApp();
 }
 
+function logoutUser() {
+  const email = localStorage.getItem("userEmail");
+
+  if (typeof google !== "undefined" && google.accounts?.id?.revoke) {
+    google.accounts.id.revoke(email, () => {
+      console.log("Google session revoked.");
+      finalizeLogout();
+    });
+  } else {
+    console.warn("Google Identity Services not available.");
+    finalizeLogout(); // fallback
+  }
+}
+
+function finalizeLogout() {
+  // Clear stored user info
+  localStorage.removeItem("userEmail");
+  localStorage.removeItem("userName");
+
+  // Hide main app UI
+  const container = document.querySelector(".container");
+  if (container) container.style.display = "none";
+
+  // Show login screen
+  const loginScreen = document.getElementById("login-screen");
+  if (loginScreen) loginScreen.style.display = "block";
+
+  // Clear user badge
+  const badgeEl = document.getElementById("userBadge");
+  if (badgeEl) badgeEl.textContent = "";
+
+  // Hide and reset profile image
+  const picEl = document.getElementById("userPic");
+  if (picEl) {
+    picEl.src = "";
+    picEl.alt = "";
+    picEl.style.display = "none";
+  }
+
+  // Optional: Reset app state
+  if (typeof resetTripState === "function") resetTripState();
+
+  showToast("👋 You’ve been logged out.");
+
+  // Optional: Reload to fully reset
+  location.reload();
+}
 
 // --- Helper ---
 function safeUpdate(id, value) {
