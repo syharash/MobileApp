@@ -623,7 +623,16 @@ function updateControls() {
 
 
 // --- On Load ---
-window.onload = initializeApp;
+window.onload = () => {
+  const userEmail = localStorage.getItem("userEmail");
+  if (userEmail) {
+    initializeApp();
+  } else {
+    document.getElementById("login-screen")?.style.display = "block";
+    document.querySelector(".container")?.style.display = "none";
+  }
+};
+
 
 function initializeApp() {
   initMapServices();
