@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mileage Tracker</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h2>Mileage Tracker</h2>
+
+    <div id="userBadge">Logged in as: <span id="user-name">Syed</span></div>
+
+    <div class="field-group">
+      <label for="trip-purpose">Trip Purpose</label>
+      <input type="text" id="trip-purpose" />
+    </div>
+
+    <div class="field-group">
+      <label for="trip-notes">Notes</label>
+      <textarea id="trip-notes"></textarea>
+    </div>
+
+    <div class="field-group">
+      <label for="rate">Reimbursement Rate ($/mile)</label>
+      <input type="number" id="rate" value="0.655" step="0.01" />
+    </div>
+
+    <div class="button-group">
+      <button id="startTrackingBtn">Start Trip</button>
+      <button id="pauseTrackingBtn">Pause</button>
+      <button id="resumeTrackingBtn">Resume</button>
+      <button id="endTrackingBtn">End Trip</button>
+      <button id="downloadCSVBtn">Download CSV</button>
+    </div>
+
+    <div id="trip-summary">
+      <h3>Trip Summary</h3>
+      <p><strong>Purpose:</strong> <span id="summary-purpose">–</span></p>
+      <p><strong>Notes:</strong> <span id="summary-notes">–</span></p>
+      <p><strong>Start:</strong> <span id="summary-start">–</span></p>
+      <p><strong>End:</strong> <span id="summary-end">–</span></p>
+      <p><strong>Distance:</strong> <span id="summary-distance">–</span></p>
+      <p><strong>Duration:</strong> <span id="summary-duration">–</span></p>
+      <p><strong>Paused:</strong> <span id="pause-summary">–</span></p>
+      <p><strong>Reimbursement:</strong> <span id="summary-amount">$0.00</span></p>
+    </div>
+
+    <div id="map"></div>
+    <div id="directions-panel"></div>
+  </div>
+
+  <div id="toast"></div>
+  <script src="app.js"></script>
+  <button id="floating-end-btn" onclick="endTracking()">End Trip</button>
+</body>
+</html>

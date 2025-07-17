@@ -1,0 +1,27 @@
+{
+  "name": "Mileage Tracker",
+  "short_name": "MileageApp",
+  "description": "Track mileage, log trips, calculate reimbursements, and export your driving data.",
+  "start_url": "https://syharash.github.io/mileage-tracker/",
+  "scope": "https://syharash.github.io/mileage-tracker/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f4f4f4",
+  "theme_color": "#1976d2",
+  "lang": "en-US",
+  "id": "https://syharash.github.io/mileage-tracker/",
+  "icons": [
+   {
+      "src": "car-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "bluecar-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
