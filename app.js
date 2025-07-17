@@ -437,18 +437,29 @@ function downloadFilteredCSV() {
 
 function updateFilteredButtonState() {
   const btn = document.getElementById("downloadFilteredBtn");
-  const filteredTrips = tripLog.filter(/* your filter logic */);
-  function updateFilteredButtonState() {
-  const tripLog = getTripLog(); // however you're retrieving it
+  const tripLog = getTripLog();
 
   if (!Array.isArray(tripLog)) {
     console.warn("Trip log is not an array:", tripLog);
-    return; // bail early
+    btn.disabled = true;
+    return;
   }
 
-  const filteredTrips = tripLog.filter(/* your logic */);
-  // continue with button state updates
+  const startDate = document.getElementById("filter-start").value;
+  const endDate = document.getElementById("filter-end").value;
+  const purpose = document.getElementById("filter-purpose").value.toLowerCase();
+
+  const filteredTrips = tripLog.filter(t => {
+    const tripDate = new Date(t.date);
+    const matchStart = !startDate || tripDate >= new Date(startDate);
+    const matchEnd = !endDate || tripDate <= new Date(endDate);
+    const matchPurpose = !purpose || t.purpose.toLowerCase().includes(purpose);
+    return matchStart && matchEnd && matchPurpose;
+  });
+
+  btn.disabled = filteredTrips.length === 0;
 }
+
 
 function getTripLog() {
   try {
