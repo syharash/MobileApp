@@ -181,6 +181,32 @@
     filterTrips({});
   }
 </script>
+
+<script>
+  function handleLogin(response) {
+    console.log("Encoded JWT ID token:", response.credential);
+    // TODO: Add login logic here (e.g., decode token, show main UI, etc.)
+  }
+
+  window.onload = function () {
+    google.accounts.id.initialize({
+      client_id: "458154195187-k30hob25jnri4j65t6abfemdstvjbngh.apps.googleusercontent.com",
+      callback: handleLogin
+    });
+
+    google.accounts.id.renderButton(
+      document.querySelector(".g_id_signin"),
+      {
+        theme: "outline",
+        size: "large",
+        text: "sign_in_with",
+        shape: "rectangular",
+        logo_alignment: "left"
+      }
+    );
+  };
+</script>
+
 </body>
 </html>
          
