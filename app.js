@@ -355,6 +355,7 @@ function loadTripHistory() {
     updateSummary();
   }
 }
+
 function updateSummary() {
   let today = 0, week = 0;
   const todayDate = new Date().toDateString();
@@ -368,10 +369,22 @@ function updateSummary() {
     if (d.getTime() >= weekAgo) week += m;
   });
 
-  document.getElementById("today-summary").textContent = `${today.toFixed(2)} mi | $${(today * rate).toFixed(2)}`;
-  document.getElementById("today-summary").textContent = `${today.toFixed(2)} mi | $${(today * rate).toFixed(2)}`;
-  document.getElementById("week-summary").textContent = `${week.toFixed(2)} mi | $${(week * rate).toFixed(2)}`;
+  const todayEl = document.getElementById("today-summary");
+  const weekEl = document.getElementById("week-summary");
+
+  if (todayEl) {
+    todayEl.textContent = `${today.toFixed(2)} mi | $${(today * rate).toFixed(2)}`;
+    todayEl.classList.add("updated");
+    setTimeout(() => todayEl.classList.remove("updated"), 400);
+  }
+
+  if (weekEl) {
+    weekEl.textContent = `${week.toFixed(2)} mi | $${(week * rate).toFixed(2)}`;
+    weekEl.classList.add("updated");
+    setTimeout(() => weekEl.classList.remove("updated"), 400);
+  }
 }
+
 
 function downloadCSV() {
   if (!tripLog.length) return showToast("📂 No trips to export");
