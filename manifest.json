@@ -1,9 +1,9 @@
 {
-  "name": "Mileage Tracker",
-  "short_name": "MileageApp",
+  "name": "Miles for Money",
+  "short_name": "Miles App",
   "description": "Track mileage, log trips, calculate reimbursements, and export your driving data.",
-  "start_url": "https://syharash.github.io/mileage-tracker/",
-  "scope": "https://syharash.github.io/mileage-tracker/",
+  "start_url": "https://syharash.github.io/MobileApp/",
+  "scope": "https://syharash.github.io/MobileApp/",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#f4f4f4",
