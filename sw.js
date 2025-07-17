@@ -1,4 +1,4 @@
-const CACHE_NAME = "mileage-tracker-cache-v1";
+const CACHE_NAME = "miles-money-cache-v1";
 const urlsToCache = [
   "./",
   "./index.html",
