@@ -29,13 +29,30 @@ function handleCredentialResponse(response) {
   localStorage.setItem("userName", user.name);
   showToast(`👋 Welcome, ${user.name}`);
 
-  document.getElementById("userBadge").textContent = `Logged in as: ${user.name} (${user.email})`;
-  document.getElementById("userPic").src = user.picture;
-  document.getElementById("login-screen").style.display = "none";
-  document.querySelector(".container").style.display = "block";
+  // Safely update user badge
+  const badgeEl = document.getElementById("userBadge");
+  if (badgeEl) {
+    badgeEl.textContent = `Logged in as: ${user.name} (${user.email})`;
+  }
+
+  // Safely update profile image
+  const picEl = document.getElementById("userPic");
+  if (picEl) {
+    picEl.src = user.picture;
+    picEl.alt = `Profile picture of ${user.name}`;
+    picEl.style.display = "inline-block";
+  }
+
+  // Hide login screen and show app
+  const loginScreen = document.getElementById("login-screen");
+  if (loginScreen) loginScreen.style.display = "none";
+
+  const container = document.querySelector(".container");
+  if (container) container.style.display = "block";
 
   initializeApp();
 }
+
 
 function logoutUser() {
   localStorage.removeItem("userEmail");
