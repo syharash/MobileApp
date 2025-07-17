@@ -53,7 +53,6 @@ function handleCredentialResponse(response) {
   initializeApp();
 }
 
-
 function logoutUser() {
   const email = localStorage.getItem("userEmail") || "syharash.usa@gmail.com";
 
@@ -85,7 +84,7 @@ function logoutUser() {
     }
 
     // Optional: Reset app state
-    resetTripState();
+    if (typeof resetTripState === "function") resetTripState();
 
     showToast("👋 You’ve been logged out.");
 
@@ -93,9 +92,6 @@ function logoutUser() {
     location.reload();
   });
 }
-
-
-
 
 // --- Helper ---
 function safeUpdate(id, value) {
