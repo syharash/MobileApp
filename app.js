@@ -1,4 +1,4 @@
-// == Mileage Tracker – Clean & Consolidated ==
+// == Miles Tracker – Clean & Consolidated ==
 let tripPoints = [];
 let tracking = false;
 let tripStatus = 'idle';
