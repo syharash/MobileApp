@@ -1,4 +1,4 @@
-// == Miles Tracker – Clean & Consolidated ==
+// == Mileage Tracker – Clean & Consolidated ==
 let tripPoints = [];
 let tracking = false;
 let tripStatus = 'idle';
@@ -461,12 +461,6 @@ function updateControls() {
   const pauseTrackingBtn = document.getElementById("pauseTrackingBtn");
   const resumeTrackingBtn = document.getElementById("resumeTrackingBtn");
   const endTrackingBtn = document.getElementById("endTrackingBtn");
-  const floatingBtn = document.getElementById("floating-end-btn");
-if (tripStatus === 'tracking' || tripStatus === 'resumed') {
-  floatingBtn.style.display = "block";
-} else {
-  floatingBtn.style.display = "none";
-}
 
   if (tripStatus === 'idle') {
   // Trip is idle or has ended
