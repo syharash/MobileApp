@@ -55,21 +55,35 @@ function handleCredentialResponse(response) {
 
 
 function logoutUser() {
+  // Clear stored user info
   localStorage.removeItem("userEmail");
   localStorage.removeItem("userName");
 
-  // Optionally clear tripLog from memory
-  tripLog = [];
-  document.getElementById("trip-log").innerHTML = "";
-  updateSummary();
+  // Hide main app UI
+  const container = document.querySelector(".container");
+  if (container) container.style.display = "none";
 
-  // Hide app UI
-  document.querySelector(".container").style.display = "none";
+  // Show login screen
+  const loginScreen = document.getElementById("login-screen");
+  if (loginScreen) loginScreen.style.display = "block";
 
-  showToast("👋 Logged out");
-  setTimeout(() => location.reload(), 1000);
-  document.getElementById("userBadge").textContent = "";
+  // Clear user badge
+  const badgeEl = document.getElementById("userBadge");
+  if (badgeEl) badgeEl.textContent = "";
+
+  // Hide and reset profile image
+  const picEl = document.getElementById("userPic");
+  if (picEl) {
+    picEl.src = "";
+    picEl.alt = "";
+    picEl.style.display = "none";
+  }
+
+  // Optional: Reset app state
+  resetTripState(); // if you have a function for this
+  showToast("👋 You’ve been logged out.");
 }
+
 
 
 // --- Helper ---
