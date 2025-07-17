@@ -534,7 +534,7 @@ function initializeApp() {
   document.getElementById("trip-purpose").value = "";
   document.getElementById("trip-notes").value = "";
   document.getElementById("restoreTrip").onclick = restoreLastTrip;
-  document.getElementById("logoutBtn").onclick = logoutUser;
+  document.getElementById("logoutBtn").onclick = logout;
   document.getElementById("downloadAllBtn").onclick = () => downloadAllBtn(false);
   document.getElementById("downloadFilteredBtn").onclick = () => downloadFilteredBtn(true);
 
