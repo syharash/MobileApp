@@ -405,7 +405,18 @@ function downloadCSV() {
 }
 
 function downloadFilteredCSV() {
-  const filteredTrips = tripLog.filter(t => t.reimbursement); // or any other filter logic
+  const startDate = document.getElementById("filter-start").value;
+  const endDate = document.getElementById("filter-end").value;
+  const purpose = document.getElementById("filter-purpose").value.toLowerCase();
+
+  const filteredTrips = tripLog.filter(t => {
+  const tripDate = new Date(t.date);
+  const matchStart = !startDate || tripDate >= new Date(startDate);
+  const matchEnd = !endDate || tripDate <= new Date(endDate);
+  const matchPurpose = !purpose || t.purpose.toLowerCase().includes(purpose);
+  return matchStart && matchEnd && matchPurpose;
+  });
+
   if (!filteredTrips.length) return showToast("📂 No filtered trips to export");
 
   let csv = "Date,Purpose,Notes,Miles,Duration,Paused,Reimbursement\n";
@@ -422,6 +433,12 @@ function downloadFilteredCSV() {
   a.download = `filtered_mileage_${timestamp}.csv`;
   a.click();
   URL.revokeObjectURL(url);
+}
+
+function updateFilteredButtonState() {
+  const btn = document.getElementById("downloadFilteredBtn");
+  const filteredTrips = tripLog.filter(/* your filter logic */);
+  btn.disabled = filteredTrips.length === 0;
 }
 
 function clearHistory() {
@@ -533,6 +550,7 @@ function initializeApp() {
   updateStatus("Idle");
   updateControls();
   loadTripHistory();
+  updateFilteredButtonState();
 
   const buttonHandlers = {
     startTrackingBtn: startTracking,
@@ -556,6 +574,9 @@ function initializeApp() {
   document.getElementById("logoutBtn").onclick = logout;
   document.getElementById("downloadAllBtn").onclick = () => downloadAllBtn(false);
   document.getElementById("downloadFilteredBtn").onclick = downloadFilteredCSV;
+  document.getElementById("filter-start").addEventListener("change", updateFilteredButtonState);
+  document.getElementById("filter-end").addEventListener("change", updateFilteredButtonState);
+  document.getElementById("filter-purpose").addEventListener("input", updateFilteredButtonState);
 
 
 
