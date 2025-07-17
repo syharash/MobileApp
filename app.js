@@ -658,6 +658,7 @@ function initializeApp() {
   document.getElementById("filter-start").addEventListener("change", updateFilteredButtonState);
   document.getElementById("filter-end").addEventListener("change", updateFilteredButtonState);
   document.getElementById("filter-purpose").addEventListener("input", updateFilteredButtonState);
+  document.getElementById("logoutBtn").addEventListener("click", logoutUser);
 
 
 
