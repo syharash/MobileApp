@@ -16,19 +16,24 @@ const motionThreshold = 0.1;
 const apiKey = "AIzaSyAInvy6GdRdnuYVJGlde1gX0VINpU5AsJI";
 
 // ---- Login and Logout Handler Function ---- //
-function handleLogin(response) {
-  const user = jwt_decode(response.credential);
+function handleCredentialResponse(response) {
+  const token = response.credential;
+  const user = parseJwt(token);
+
+  if (!user || !user.name || !user.picture) {
+    console.warn("Invalid user object from token:", user);
+    return;
+  }
+
   localStorage.setItem("userEmail", user.email);
   localStorage.setItem("userName", user.name);
   showToast(`👋 Welcome, ${user.name}`);
+
   document.getElementById("userBadge").textContent = `Logged in as: ${user.name} (${user.email})`;
+  document.getElementById("userPic").src = user.picture;
   document.getElementById("login-screen").style.display = "none";
   document.querySelector(".container").style.display = "block";
-  
-  // Optionally show app UI
-  document.querySelector(".container").style.display = "block";
 
-  // Load user-specific trip history
   initializeApp();
 }
 
@@ -58,27 +63,6 @@ function safeUpdate(id, value) {
   } else {
     console.warn(`⚠️ Element with ID "${id}" not found`);
   }
-}
-
-function handleCredentialResponse(response) {
-  const token = response.credential;
-  const user = parseJwt(token);
-
-  if (!user || !user.name || !user.picture) {
-    console.warn("Invalid user object from token:", user);
-    return;
-  }
-
-  localStorage.setItem("userEmail", user.email);
-  localStorage.setItem("userName", user.name);
-  showToast(`👋 Welcome, ${user.name}`);
-
-  document.getElementById("userBadge").textContent = `Logged in as: ${user.name} (${user.email})`;
-  document.getElementById("userPic").src = user.picture;
-  document.getElementById("login-screen").style.display = "none";
-  document.querySelector(".container").style.display = "block";
-
-  initializeApp();
 }
 
 function parseJwt(token) {
