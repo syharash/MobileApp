@@ -519,7 +519,8 @@ function initializeApp() {
     pauseTrackingBtn: pauseTracking,
     resumeTrackingBtn: resumeTracking,
     endTrackingBtn: endTracking,
-    downloadCSVBtn: downloadCSV,
+    downloadAllBtn: downloadAlltrips,
+    downloadFilteredBtn: downloadFilteredtrips,
     clearHistoryBtn: clearHistory,
     toggleHelpBtn: toggleHelp
   };
@@ -534,8 +535,8 @@ function initializeApp() {
   document.getElementById("trip-notes").value = "";
   document.getElementById("restoreTrip").onclick = restoreLastTrip;
   document.getElementById("logoutBtn").onclick = logoutUser;
-  document.getElementById("downloadAllBtn").onclick = () => downloadCSVBtn(false);
-  document.getElementById("downloadFilteredBtn").onclick = () => downloadCSVBtn(true);
+  document.getElementById("downloadAllBtn").onclick = () => downloadAllBtn(false);
+  document.getElementById("downloadFilteredBtn").onclick = () => downloadFilteredBtn(true);
 
 
   if (directionsRenderer) {
