@@ -55,34 +55,45 @@ function handleCredentialResponse(response) {
 
 
 function logoutUser() {
-  // Clear stored user info
-  localStorage.removeItem("userEmail");
-  localStorage.removeItem("userName");
+  const email = localStorage.getItem("userEmail") || "syharash.usa@gmail.com";
 
-  // Hide main app UI
-  const container = document.querySelector(".container");
-  if (container) container.style.display = "none";
+  google.accounts.id.revoke(email, () => {
+    console.log("Google session revoked.");
 
-  // Show login screen
-  const loginScreen = document.getElementById("login-screen");
-  if (loginScreen) loginScreen.style.display = "block";
+    // Clear stored user info
+    localStorage.removeItem("userEmail");
+    localStorage.removeItem("userName");
 
-  // Clear user badge
-  const badgeEl = document.getElementById("userBadge");
-  if (badgeEl) badgeEl.textContent = "";
+    // Hide main app UI
+    const container = document.querySelector(".container");
+    if (container) container.style.display = "none";
 
-  // Hide and reset profile image
-  const picEl = document.getElementById("userPic");
-  if (picEl) {
-    picEl.src = "";
-    picEl.alt = "";
-    picEl.style.display = "none";
-  }
+    // Show login screen
+    const loginScreen = document.getElementById("login-screen");
+    if (loginScreen) loginScreen.style.display = "block";
 
-  // Optional: Reset app state
-  resetTripState(); // if you have a function for this
-  showToast("👋 You’ve been logged out.");
+    // Clear user badge
+    const badgeEl = document.getElementById("userBadge");
+    if (badgeEl) badgeEl.textContent = "";
+
+    // Hide and reset profile image
+    const picEl = document.getElementById("userPic");
+    if (picEl) {
+      picEl.src = "";
+      picEl.alt = "";
+      picEl.style.display = "none";
+    }
+
+    // Optional: Reset app state
+    resetTripState();
+
+    showToast("👋 You’ve been logged out.");
+
+    // Optional: Reload to fully reset
+    location.reload();
+  });
 }
+
 
 
 
