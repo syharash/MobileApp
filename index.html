@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Miles N Money</title>
-  
+  <title>Miles and Money Calculator App</title>
+  <link rel="manifest" href="manifest.json" />
   <link rel="stylesheet" href="style.css" />
-  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="./favicon.ico" type="image/x-icon" />
   
   <script>
     function initMap() {
@@ -35,90 +35,144 @@
     data-callback="handleLogin"
     data-auto_prompt="false"></div>
 
-  <div class="g_id_signin"
-    data-type="standard"
-    data-size="large"
-    data-theme="outline"
-    data-text="sign_in_with"
-    data-shape="rectangular"
-    data-logo_alignment="left">
+   <!-- Branded Login Screen -->
+  <div id="login-screen">
+    <div class="login-wrapper">
+      <img src="icon-512.png" alt="Mileage Tracker Logo" class="logo" />
+      <h1 class="app-title">Miles & Money App</h1>
+      <div class="g_id_signin"
+        data-type="standard"
+        data-size="large"
+        data-theme="outline"
+        data-text="sign_in_with"
+        data-shape="rectangular"
+        data-logo_alignment="left">
+      </div>
+    </div>
   </div>
 
-  <!-- Main Container -->
-  <div class="container" style="display:none; padding: 1rem;">
-    <h2>Calculate Your Miles n Money 🚗</h2>
+   <div class="container" style="display:none;">
+    <!-- ✅ Sticky Status Bar -->
+    <div id="status-bar">Status: <span id="status-text">Idle</span></div>
 
-    <!-- Input Fields -->
-    <div class="field-group">
-      <label for="trip-purpose">Purpose / Client:</label>
-      <input type="text" id="trip-purpose" placeholder="e.g. Site visit" />
-    </div>
+    <!-- ✅ Split Layout -->
+    <div class="split-layout">
+      <!-- Sidebar Panel -->
+      <aside class="sidebar">
+        <p id="userBadge"></p>
 
-    <div class="field-group">
-      <label for="trip-notes">Notes:</label>
-      <textarea id="trip-notes" rows="2" placeholder="Any observations…"></textarea>
-    </div>
+        <!-- Trip Controls -->
+        <section>
+          <h3>Trip Controls</h3>
+          <div class="button-group">
+            <button id="startTrackingBtn">Start Trip</button>
+            <button id="pauseTrackingBtn" disabled>Pause Trip</button>
+            <button id="resumeTrackingBtn" disabled>Resume Trip</button>
+            <button id="endTrackingBtn" disabled>End Trip</button>
+            <button id="restoreTrip">Restore Last Trip</button>
+          </div>
+        </section>
 
-    <label for="rate">Reimbursement Rate ($/mi):</label>
-    <input type="number" id="rate" value="0.655" step="0.001" />
+        <!-- Trip Summary -->
+        <section>
+          <h3>Last Trip Summary</h3>
+          <div id="trip-summary">
+            <p><strong>Status:</strong> <span id="tracking-status">Idle</span></p>
+            <p><strong>Purpose:</strong> <span id="summary-purpose">–</span></p>
+            <p><strong>Notes:</strong> <span id="summary-notes">–</span></p>
+            <p><strong>Start:</strong> <span id="summary-start">–</span></p>
+            <p><strong>End:</strong> <span id="summary-end">–</span></p>
+            <p><strong>Distance:</strong> <span id="summary-distance">0 mi</span></p>
+            <p><strong>Last Amount:</strong><span id="lastAmount">-</span></p>
+            <p><strong>Duration:</strong> <span id="summary-duration">–</span></p>
+            <p><strong>Paused Time:</strong> <span id="pause-summary">0 min</span></p>
+            <p><strong>Last Distance:</strong> <span id="lastDistance">–</span></p>
+            <p><strong>Last Duration:</strong> <span id="lastDuration">–</span></p>
+          </div>
+        </section>
 
-    <!-- Action Buttons -->
-    <div class="button-group" style="display: flex; flex-wrap: wrap; gap: 8px;">
-      <button id="startTrackingBtn">Start Trip</button>
-      <button id="pauseTrackingBtn" disabled>Pause</button>
-      <button id="resumeTrackingBtn" disabled>Resume</button>
-      <button id="endTrackingBtn" disabled>End</button>
-      <button id="downloadCSVBtn">Download</button>
-      <button id="clearHistoryBtn">Clear</button>
-      <button id="toggleHelpBtn">Help</button>
-      <button id="restoreTrip">Restore</button>
-      <button id="logoutBtn">Logout</button> 
-    </div>
+        <!-- Export & Filters -->
+        <section>
+          <h3>Export & Filter</h3>
+          <label for="rate">Reimbursement Rate ($/mi):</label>
+          <input type="number" id="rate" value="0.655" step="0.001" />
 
-    <!-- Trip Log -->
-    <h3>Trip Log 📍</h3>
-    <ul id="trip-log"></ul>
-
-    <!-- Summary -->
-    <h3>Summary 🧾</h3>
-    <p><strong>Today:</strong> <span id="today-summary">0 mi | $0.00</span></p>
-    <p><strong>This Week:</strong> <span id="week-summary">0 mi | $0.00</span></p>
-
-    <div id="trip-summary">
-      <h4>🧭 Last Trip Summary</h4>
-      <p><strong>Status:</strong> <span id="tracking-status">Idle</span></p>
-      <p><strong>Purpose:</strong> <span id="summary-purpose">–</span></p>
-      <p><strong>Notes:</strong> <span id="summary-notes">–</span></p>
-      <p><strong>Start:</strong> <span id="summary-start">–</span></p>
-      <p><strong>End:</strong> <span id="summary-end">–</span></p>
-      <p><strong>Distance:</strong> <span id="summary-distance">0 mi</span></p>
-      <p><strong>Duration:</strong> <span id="summary-duration">–</span></p>
-      <p><strong>Paused Time:</strong> <span id="pause-summary">0 min</span></p>
-      <p><strong>Last Distance:</strong> <span id="lastDistance">–</span></p>
-      <p><strong>Last Duration:</strong> <span id="lastDuration">–</span></p>
-      <p><strong>Reimbursement:</strong> <span id="summary-amount">$0.00</span></p>
-    </div>
-
-    <!-- Map Section -->
-    <div id="map" style="height: 300px; width: 100%; margin-top: 1rem;"></div>
-    <div id="directions-panel" style="margin-top: 1rem;"></div>
-
-    <!-- Help -->
-    <div id="help-screen" style="display:none;">
-      <h3>📘 Help Guide</h3>
-      <ol>
-        <li>Fill in purpose & notes.</li>
-        <li>Tap “Start Trip” to begin.</li>
-        <li>Pause/resume as needed.</li>
-        <li>Tap “End Trip” to finalize.</li>
-        <li>Export CSV or clear history.</li>
-      </ol>
-    </div>
-
-    <!-- Toast -->
+          <div class="field-group">
+            <label for="filter-start">Start Date:</label>
+            <input type="date" id="filter-start" />
+          </div>
+          <div class="field-group">
+            <label for="filter-end">End Date:</label>
+            <input type="date" id="filter-end" />
+          </div>
+          <div class="field-group">
+            <label for="filter-purpose">Purpose / Client:</label>
+            <input type="text" id="filter-purpose" placeholder="e.g. Site visit" />
+          </div>
+          <div class="button-group">
+            <button onclick="applyFilters()">Apply Filters</button>
+            <button onclick="resetFilters()">Reset Filters</button>
+            <button onclick="downloadCSVBtn(false)">Download All Trips</button>
+            <button onclick="downloadCSVBtn(true)">Download Filtered Trips</button>
+          </div>
+        </section>    <!-- Toast -->
     <div id="toast"></div>
   </div>
 
-  <script src="app.js"></script>
+        <!-- Trip Log -->
+<section>
+  <h3>Trip Log 📍</h3>
+  <ul id="trip-log"></ul>
+</section>
+     
+<!-- Help & Logout -->
+<section>
+  <button id="toggleHelpBtn">Help</button>
+  <button id="clearHistoryBtn">Clear History</button>
+  <button id="logoutBtn">Logout</button>
+</section>
+</aside> <!-- End of Sidebar -->
+
+<!-- Map Panel -->
+<main class="map-panel">
+  <!-- ✅ Floating Trip Timer -->
+  <div id="trip-timer" aria-live="polite">Trip Time: 00:00:00</div>
+
+  <div id="map"></div>
+  <div id="directions-panel"></div>
+
+  <!-- Help Screen -->
+  <div id="help-screen" style="display:none;">
+    <h3>📘 Help Guide</h3>
+    <p>1. Fill in purpose & notes.</p>
+    <p>2. Tap “Start Trip” to begin.</p>
+    <p>3. Pause/resume as needed.</p>
+    <p>4. Tap “End Trip” to finalize and view recap.</p>
+    <p>5. Export CSV or clear history.</p>
+  </div>
+
+  <!-- Toast Message -->
+  <div id="toast"></div>
+</main> <!-- End of Map Panel -->
+</div> <!-- End of Split Layout -->
+</div> <!-- End of .container -->
+
+<!-- Filter Logic -->
+<script>
+  function applyFilters() {
+    const startDate = document.getElementById("filter-start").value;
+    const endDate = document.getElementById("filter-end").value;
+    const purpose = document.getElementById("filter-purpose").value;
+    filterTrips({ startDate, endDate, purpose });
+  }
+
+  function resetFilters() {
+    document.getElementById("filter-start").value = "";
+    document.getElementById("filter-end").value = "";
+    document.getElementById("filter-purpose").value = "";
+    filterTrips({});
+  }  
+<script src="app.js"></script>
+  
 </body>
 </html>
