@@ -29,7 +29,7 @@ function handleLogin(response) {
   document.querySelector(".container").style.display = "block";
 
   // Load user-specific trip history
-  loadTripHistory();
+  initializeApp();
 }
 
 function logoutUser() {
@@ -506,7 +506,9 @@ function updateControls() {
 
 
 // --- On Load ---
-window.onload = function () {
+window.onload = initializeApp;
+
+function initializeApp() {
   initMapServices();
   updateStatus("Idle");
   updateControls();
@@ -533,13 +535,10 @@ window.onload = function () {
   document.getElementById("restoreTrip").onclick = restoreLastTrip;
   document.getElementById("logoutBtn").onclick = logoutUser;
 
-  if (!document.getElementById("toast")) {
-    console.warn("🚨 Toast element not found.");
-  }
-
   if (directionsRenderer) {
     directionsRenderer.setDirections({ routes: [] });
     const panel = document.getElementById("directions-panel");
     if (panel) panel.innerHTML = "";
   }
-};
+}
+
