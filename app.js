@@ -460,7 +460,6 @@ function updateFilteredButtonState() {
   btn.disabled = filteredTrips.length === 0;
 }
 
-
 function getTripLog() {
   try {
     const raw = localStorage.getItem("tripLog");
@@ -470,7 +469,6 @@ function getTripLog() {
     console.error("Failed to parse tripLog:", e);
     return [];
   }
-  btn.disabled = filteredTrips.length === 0;
 }
 
 function clearHistory() {
