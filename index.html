@@ -4,60 +4,48 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Miles N Money</title>
-  <!-- <link rel="manifest" href="manifest.json" /> -->
+  
   <link rel="stylesheet" href="style.css" />
   <link rel="icon" href="/favicon.ico" type="image/x-icon">
-
-  <p id="userBadge" style="font-weight: bold; color: #555; margin-bottom: 10px;"></p>
-
+  
   <script>
-  function initMap() {
-    const map = new google.maps.Map(document.getElementById("map"), {
-      center: { lat: 38.58, lng: -121.49 }, // Sacramento
-      zoom: 12,
-    });
-  }
-
-  <!-- Expose it globally (necessary in some modern setups) -->
-window.initMap = initMap;
-</script>
-
- <!-- Google Maps JavaScript API -->
-  <script
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAInvy6GdRdnuYVJGlde1gX0VINpU5AsJI&libraries=places&callback=initMap"
-    async
-    defer>
+    function initMap() {
+      const map = new google.maps.Map(document.getElementById("map"), {
+        center: { lat: 38.58, lng: -121.49 },
+        zoom: 12,
+      });
+    }
+    window.initMap = initMap;
   </script>
-   
- <!---- Google Identity script ---->  
+
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAInvy6GdRdnuYVJGlde1gX0VINpU5AsJI&libraries=places&callback=initMap" async defer></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
-  
 </head>
-  
+
 <body>
-    <!---- Google Sing-IN ---->
-    <div id="g_id_onload"
-      data-client_id="458154195187-k30hob25jnri4j65t6abfemdstvjbngh.apps.googleusercontent.com"
-      data-callback="handleLogin"
-      data-auto_prompt="false">
-    </div>
-      
-    <div class="g_id_signin"
-      data-type="standard"
-      data-size="large"
-      data-theme="outline"
-      data-text="sign_in_with"
-      data-shape="rectangular"
-      data-logo_alignment="left">
-    </div>
+  <p id="userBadge" style="font-weight: bold; color: #555; margin: 10px;"></p>
 
- <!---- App UI (hidden until login) ---->  
-    <div class="container" style="display:none;">
-     <h2>Calculate Your Miles n Money 🚗</h2>
-     <p id="userBadge"></p>
+  <!-- Google Sign-In -->
+  <div id="g_id_onload"
+    data-client_id="458154195187-k30hob25jnri4j65t6abfemdstvjbngh.apps.googleusercontent.com"
+    data-callback="handleLogin"
+    data-auto_prompt="false"></div>
 
-    <!-- Tagging & Notes -->
+  <div class="g_id_signin"
+    data-type="standard"
+    data-size="large"
+    data-theme="outline"
+    data-text="sign_in_with"
+    data-shape="rectangular"
+    data-logo_alignment="left">
+  </div>
+
+  <!-- Main Container -->
+  <div class="container" style="display:none; padding: 1rem;">
+    <h2>Calculate Your Miles n Money 🚗</h2>
+
+    <!-- Input Fields -->
     <div class="field-group">
       <label for="trip-purpose">Purpose / Client:</label>
       <input type="text" id="trip-purpose" placeholder="e.g. Site visit" />
@@ -72,16 +60,16 @@ window.initMap = initMap;
     <input type="number" id="rate" value="0.655" step="0.001" />
 
     <!-- Action Buttons -->
-    <div class="button-group">
-     <button id="startTrackingBtn">Start Trip</button>
-     <button id="pauseTrackingBtn" disabled>Pause Trip</button>
-     <button id="resumeTrackingBtn" disabled>Resume Trip</button>
-     <button id="endTrackingBtn" disabled>End Trip</button>
-     <button id="downloadCSVBtn">Download CSV</button>
-     <button id="clearHistoryBtn">Clear History</button>
-     <button id="toggleHelpBtn">Help</button>
-     <button id="restoreTrip">Restore Last Trip</button> 
-     <button id="logoutBtn">Logout</button> 
+    <div class="button-group" style="display: flex; flex-wrap: wrap; gap: 8px;">
+      <button id="startTrackingBtn">Start Trip</button>
+      <button id="pauseTrackingBtn" disabled>Pause</button>
+      <button id="resumeTrackingBtn" disabled>Resume</button>
+      <button id="endTrackingBtn" disabled>End</button>
+      <button id="downloadCSVBtn">Download</button>
+      <button id="clearHistoryBtn">Clear</button>
+      <button id="toggleHelpBtn">Help</button>
+      <button id="restoreTrip">Restore</button>
+      <button id="logoutBtn">Logout</button> 
     </div>
 
     <!-- Trip Log -->
@@ -106,25 +94,25 @@ window.initMap = initMap;
       <p><strong>Last Distance:</strong> <span id="lastDistance">–</span></p>
       <p><strong>Last Duration:</strong> <span id="lastDuration">–</span></p>
       <p><strong>Reimbursement:</strong> <span id="summary-amount">$0.00</span></p>
-      <p><strong>Today:</strong> <span id="today-summary">0 mi | $0.00</span></p>
-      <p><strong>This Week:</strong> <span id="week-summary">0 mi | $0.00</span></p>
     </div>
 
-    <!-- Map & Directions -->
-    <div id="map"></div>
-    <div id="directions-panel"></div>
+    <!-- Map Section -->
+    <div id="map" style="height: 300px; width: 100%; margin-top: 1rem;"></div>
+    <div id="directions-panel" style="margin-top: 1rem;"></div>
 
     <!-- Help -->
     <div id="help-screen" style="display:none;">
       <h3>📘 Help Guide</h3>
-      <p>1. Fill in purpose & notes.</p>
-      <p>2. Tap “Start Trip” to begin.</p>
-      <p>3. Pause/resume as needed.</p>
-      <p>4. Tap “End Trip” to finalize and view recap.</p>
-      <p>5. Export CSV or clear history.</p>
+      <ol>
+        <li>Fill in purpose & notes.</li>
+        <li>Tap “Start Trip” to begin.</li>
+        <li>Pause/resume as needed.</li>
+        <li>Tap “End Trip” to finalize.</li>
+        <li>Export CSV or clear history.</li>
+      </ol>
     </div>
 
-    <!-- Toast Message Container -->
+    <!-- Toast -->
     <div id="toast"></div>
   </div>
 
