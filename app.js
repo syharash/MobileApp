@@ -16,6 +16,16 @@ const motionThreshold = 0.1;
 const apiKey = "AIzaSyAInvy6GdRdnuYVJGlde1gX0VINpU5AsJI";
 
 // ---- Login and Logout Handler Function ---- //
+
+function parseJwt(token) {
+  const base64Url = token.split('.')[1];
+  const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+  const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+  }).join(''));
+  return JSON.parse(jsonPayload);
+}
+
 function handleCredentialResponse(response) {
   const token = response.credential;
   const user = parseJwt(token);
