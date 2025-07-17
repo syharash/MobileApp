@@ -3,27 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Miles and Money Calculator App</title>
+  <title>Miles and Money</title>
   <link rel="manifest" href="manifest.json" />
   <link rel="stylesheet" href="style.css" />
   <link rel="icon" href="./favicon.ico" type="image/x-icon" />
-  
-  <script>
-    function initMap() {
-      const map = new google.maps.Map(document.getElementById("map"), {
-        center: { lat: 38.58, lng: -121.49 },
-        zoom: 12,
-      });
-    }
-    window.initMap = initMap;
+
+  <!-- Google Maps API -->
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAInvy6GdRdnuYVJGlde1gX0VINpU5AsJI&libraries=places&callback=Function.prototype">
   </script>
 
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAInvy6GdRdnuYVJGlde1gX0VINpU5AsJI&libraries=places&callback=initMap" async defer></script>
+  <!-- Google Identity -->
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
 </head>
-
-<body>
+ 
+  <body>
   <p id="userBadge" style="font-weight: bold; color: #555; margin: 10px;"></p>
   <div id="login-wrapper">
     <div class="g-signin2" data-onsuccess="onSignIn"></div>
