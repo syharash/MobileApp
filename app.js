@@ -61,6 +61,16 @@ function logoutUser() {
     google.accounts.id.revoke(email, () => {
       console.log("Google session revoked.");
 
+      google.accounts.id.renderButton(
+  document.getElementById("g_id_signin"),
+  {
+    theme: "outline",
+    size: "large",
+    text: "signin_with",
+    shape: "pill"
+  }
+);
+
       // Prevent auto re-login
       google.accounts.id.cancel(); // This disables auto-login
 
