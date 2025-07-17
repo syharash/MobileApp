@@ -56,50 +56,34 @@ function handleCredentialResponse(response) {
 function logoutUser() {
   const email = localStorage.getItem("userEmail");
 
-  if (typeof google !== "undefined" && google.accounts?.id?.revoke) {
+  // Revoke Google session
+  if (google?.accounts?.id?.revoke) {
     google.accounts.id.revoke(email, () => {
       console.log("Google session revoked.");
-      finalizeLogout();
+
+      // Prevent auto re-login
+      google.accounts.id.cancel(); // This disables auto-login
+
+      // Clear UI
+      localStorage.clear();
+      document.querySelector(".container")?.style.display = "none";
+      document.getElementById("login-screen")?.style.display = "block";
+      document.getElementById("userBadge").textContent = "";
+      const picEl = document.getElementById("userPic");
+      if (picEl) {
+        picEl.src = "";
+        picEl.alt = "";
+        picEl.style.display = "none";
+      }
+
+      if (typeof resetTripState === "function") resetTripState();
+      showToast("👋 You’ve been logged out.");
     });
   } else {
     console.warn("Google Identity Services not available.");
-    finalizeLogout(); // fallback
   }
 }
 
-function finalizeLogout() {
-  // Clear stored user info
-  localStorage.removeItem("userEmail");
-  localStorage.removeItem("userName");
-
-  // Hide main app UI
-  const container = document.querySelector(".container");
-  if (container) container.style.display = "none";
-
-  // Show login screen
-  const loginScreen = document.getElementById("login-screen");
-  if (loginScreen) loginScreen.style.display = "block";
-
-  // Clear user badge
-  const badgeEl = document.getElementById("userBadge");
-  if (badgeEl) badgeEl.textContent = "";
-
-  // Hide and reset profile image
-  const picEl = document.getElementById("userPic");
-  if (picEl) {
-    picEl.src = "";
-    picEl.alt = "";
-    picEl.style.display = "none";
-  }
-
-  // Optional: Reset app state
-  if (typeof resetTripState === "function") resetTripState();
-
-  showToast("👋 You’ve been logged out.");
-
-  // Optional: Reload to fully reset
-  location.reload();
-}
 
 // --- Helper ---
 function safeUpdate(id, value) {
