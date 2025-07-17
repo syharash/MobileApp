@@ -22,6 +22,8 @@ function handleLogin(response) {
   localStorage.setItem("userName", user.name);
   showToast(`👋 Welcome, ${user.name}`);
   document.getElementById("userBadge").textContent = `Logged in as: ${user.name} (${user.email})`;
+  document.getElementById("login-screen").style.display = "none";
+  document.querySelector(".container").style.display = "block";
   
   // Optionally show app UI
   document.querySelector(".container").style.display = "block";
