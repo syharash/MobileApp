@@ -470,8 +470,6 @@ function getTripLog() {
     console.error("Failed to parse tripLog:", e);
     return [];
   }
-}
-
   btn.disabled = filteredTrips.length === 0;
 }
 
