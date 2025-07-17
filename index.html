@@ -183,15 +183,32 @@
 </script>
 
 <script>
-  function handleLogin(response) {
-    console.log("Encoded JWT ID token:", response.credential);
-    // TODO: Add login logic here (e.g., decode token, show main UI, etc.)
+  function handleCredentialResponse(response) {
+  const token = response.credential;
+  const user = parseJwt(token);
+
+  if (!user || !user.name || !user.picture) {
+    console.warn("Invalid user object from token:", user);
+    return;
   }
+
+  localStorage.setItem("userEmail", user.email);
+  localStorage.setItem("userName", user.name);
+  showToast(`👋 Welcome, ${user.name}`);
+
+  document.getElementById("userBadge").textContent = `Logged in as: ${user.name} (${user.email})`;
+  document.getElementById("userPic").src = user.picture;
+  document.getElementById("login-screen").style.display = "none";
+  document.querySelector(".container").style.display = "block";
+
+  initializeApp();
+}
+
 
   window.onload = function () {
     google.accounts.id.initialize({
       client_id: "458154195187-k30hob25jnri4j65t6abfemdstvjbngh.apps.googleusercontent.com",
-      callback: handleLogin
+      callback: handleCredentialResponse
     });
 
     google.accounts.id.renderButton(
