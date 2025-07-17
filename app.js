@@ -404,6 +404,26 @@ function downloadCSV() {
   URL.revokeObjectURL(url);
 }
 
+function downloadFilteredCSV() {
+  const filteredTrips = tripLog.filter(t => t.reimbursement); // or any other filter logic
+  if (!filteredTrips.length) return showToast("📂 No filtered trips to export");
+
+  let csv = "Date,Purpose,Notes,Miles,Duration,Paused,Reimbursement\n";
+  filteredTrips.forEach(t => {
+    csv += `${t.date},${t.purpose},${t.notes},${t.miles},${t.duration},${t.paused},${t.reimbursement}\n`;
+  });
+
+  const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  const timestamp = new Date().toISOString().replace(/[:\-T]/g, "_").split(".")[0];
+
+  a.href = url;
+  a.download = `filtered_mileage_${timestamp}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
 function clearHistory() {
   tripLog = [];
   document.getElementById("trip-log").innerHTML = "";
@@ -520,7 +540,6 @@ function initializeApp() {
     resumeTrackingBtn: resumeTracking,
     endTrackingBtn: endTracking,
     downloadAllBtn: downloadCSV,
-    downloadFilteredBtn: downloadCSV,
     clearHistoryBtn: clearHistory,
     toggleHelpBtn: toggleHelp
   };
@@ -536,7 +555,8 @@ function initializeApp() {
   document.getElementById("restoreTrip").onclick = restoreLastTrip;
   document.getElementById("logoutBtn").onclick = logout;
   document.getElementById("downloadAllBtn").onclick = () => downloadAllBtn(false);
-  document.getElementById("downloadFilteredBtn").onclick = () => downloadFilteredBtn(true);
+  document.getElementById("downloadFilteredBtn").onclick = downloadFilteredCSV;
+
 
 
   if (directionsRenderer) {
