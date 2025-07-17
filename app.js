@@ -519,8 +519,8 @@ function initializeApp() {
     pauseTrackingBtn: pauseTracking,
     resumeTrackingBtn: resumeTracking,
     endTrackingBtn: endTracking,
-    downloadAllBtn: downloadAlltrips,
-    downloadFilteredBtn: downloadFilteredtrips,
+    downloadAllBtn: downloadCSV,
+    downloadFilteredBtn: downloadCSV,
     clearHistoryBtn: clearHistory,
     toggleHelpBtn: toggleHelp
   };
