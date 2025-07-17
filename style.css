@@ -1,3 +1,4 @@
+/* Base Reset & Layout */
 body {
   font-family: 'Segoe UI', sans-serif;
   margin: 0;
@@ -8,16 +9,32 @@ body {
 }
 
 .container {
-  padding: 16px;
+  width: 100%;
   max-width: 100%;
+  padding: 16px;
+  margin: 0 auto;
+  box-sizing: border-box;
 }
 
-h2, h3 {
+/* Headings */
+h2, h3, h4 {
   font-size: 1.2em;
   margin-top: 1em;
   margin-bottom: 0.5em;
+  color: #222;
 }
 
+/* User Badge */
+#userBadge {
+  background-color: #eef;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.9em;
+  margin-bottom: 10px;
+  display: inline-block;
+}
+
+/* Form Fields */
 .field-group {
   margin-bottom: 16px;
 }
@@ -28,15 +45,18 @@ label {
   font-weight: bold;
 }
 
-input, textarea {
+input[type="text"],
+input[type="number"],
+textarea {
   width: 100%;
-  padding: 10px;
+  padding: 12px;
   font-size: 1em;
   border: 1px solid #ccc;
   border-radius: 6px;
   box-sizing: border-box;
 }
 
+/* Buttons */
 .button-group {
   display: flex;
   flex-direction: column;
@@ -45,7 +65,8 @@ input, textarea {
 }
 
 button {
-  padding: 12px;
+  width: 100%;
+  padding: 14px;
   font-size: 1em;
   background-color: #0066cc;
   color: #fff;
@@ -53,6 +74,7 @@ button {
   border-radius: 6px;
   cursor: pointer;
   font-weight: bold;
+  transition: background-color 0.3s ease;
 }
 
 button:hover {
@@ -63,6 +85,12 @@ button:disabled {
   background-color: #ccc;
   color: #666;
   cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Trip Summary */
+#trip-summary {
+  margin-top: 20px;
 }
 
 #trip-summary p {
@@ -70,6 +98,11 @@ button:disabled {
   font-size: 0.95em;
 }
 
+#trip-summary span {
+  font-weight: bold;
+}
+
+/* Map */
 #map {
   width: 100%;
   height: 250px;
@@ -78,16 +111,19 @@ button:disabled {
   border-radius: 6px;
 }
 
+/* Directions Panel */
 #directions-panel {
   margin-top: 10px;
   padding: 10px;
   background-color: #fff;
   border-radius: 6px;
   font-size: 0.9em;
-  max-height: 200px;
+  line-height: 1.4;
   overflow-y: auto;
+  max-height: 200px;
 }
 
+/* Trip Log */
 #trip-log {
   list-style: none;
   padding-left: 0;
@@ -98,6 +134,7 @@ button:disabled {
   margin-bottom: 6px;
 }
 
+/* Toast */
 #toast {
   position: fixed;
   bottom: 20px;
@@ -118,6 +155,7 @@ button:disabled {
   opacity: 1;
 }
 
+/* Floating End Trip Button */
 #floating-end-btn {
   position: fixed;
   bottom: 20px;
@@ -136,4 +174,34 @@ button:disabled {
 
 #floating-end-btn:hover {
   background-color: #b02a37;
+}
+
+/* Help Screen */
+#help-screen {
+  background-color: #fffbe6;
+  padding: 12px;
+  border-radius: 6px;
+  margin-top: 20px;
+  font-size: 0.9em;
+  display: none;
+}
+
+/* Responsive Tweaks */
+@media screen and (max-width: 600px) {
+  h2, h3 {
+    font-size: 1.2em;
+  }
+
+  input, textarea, button {
+    font-size: 1em;
+  }
+
+  #trip-summary p {
+    font-size: 0.95em;
+  }
+
+  #toast {
+    font-size: 0.9em;
+    padding: 8px 16px;
+  }
 }
