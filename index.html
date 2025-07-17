@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Miles and Money</title>
+  <title>Miles and Money Calculator App</title>
   <link rel="manifest" href="manifest.json" />
   <link rel="stylesheet" href="style.css" />
   <link rel="icon" href="./favicon.ico" type="image/x-icon" />
@@ -17,20 +17,16 @@
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
 </head>
- 
-  <body>
-  <p id="userBadge" style="font-weight: bold; color: #555; margin: 10px;"></p>
-  <div id="login-wrapper">
-    <div class="g-signin2" data-onsuccess="onSignIn"></div>
-  </div>
 
-  <!-- Google Sign-In -->
+<body>
+  <!-- Google Sign-In Setup -->
   <div id="g_id_onload"
     data-client_id="458154195187-k30hob25jnri4j65t6abfemdstvjbngh.apps.googleusercontent.com"
     data-callback="handleLogin"
-    data-auto_prompt="false"></div>
+    data-auto_prompt="false">
+  </div>
 
-   <!-- Branded Login Screen -->
+  <!-- Branded Login Screen -->
   <div id="login-screen">
     <div class="login-wrapper">
       <img src="icon-512.png" alt="Mileage Tracker Logo" class="logo" />
@@ -46,7 +42,8 @@
     </div>
   </div>
 
-   <div class="container" style="display:none;">
+  <!-- Main App UI -->
+  <div class="container" style="display:none;">
     <!-- ✅ Sticky Status Bar -->
     <div id="status-bar">Status: <span id="status-text">Idle</span></div>
 
@@ -110,16 +107,14 @@
             <button onclick="downloadCSVBtn(false)">Download All Trips</button>
             <button onclick="downloadCSVBtn(true)">Download Filtered Trips</button>
           </div>
-        </section>    <!-- Toast -->
-    <div id="toast"></div>
-  </div>
+        </section>
 
-        <!-- Trip Log -->
+       <!-- Trip Log -->
 <section>
   <h3>Trip Log 📍</h3>
   <ul id="trip-log"></ul>
 </section>
-     
+
 <!-- Help & Logout -->
 <section>
   <button id="toggleHelpBtn">Help</button>
@@ -152,8 +147,9 @@
 </div> <!-- End of Split Layout -->
 </div> <!-- End of .container -->
 
-    <script src="app.js"></script>
-    
+<!-- Scripts -->
+<script src="auth.js"></script>
+
 <!-- Filter Logic -->
 <script>
   function applyFilters() {
@@ -168,6 +164,8 @@
     document.getElementById("filter-end").value = "";
     document.getElementById("filter-purpose").value = "";
     filterTrips({});
-  }  
+  }
+</script>
 </body>
 </html>
+         
